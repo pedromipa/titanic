@@ -5,7 +5,6 @@ train = pd.read_csv('train.csv')
 test =  pd.read_csv('test.csv')
 
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier
 
 modelo = DecisionTreeClassifier(random_state=0)
 
