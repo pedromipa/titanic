@@ -4,9 +4,10 @@ import pandas as pd
 train = pd.read_csv('train.csv')
 test =  pd.read_csv('test.csv')
 
+from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 
-modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
+modelo = DecisionTreeClassifier(random_state=0)
 
 def transformar_sexo(valor):
     if valor == 'female':
