@@ -6,7 +6,8 @@ test =  pd.read_csv('test.csv')
 
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.model_selection import KFold
+from sklearn.model_selection import RepeatedKFold
+
 np.random.seed(0)
             
 modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
@@ -19,7 +20,7 @@ def transformar_sexo(valor):
 
 train['Sex_binario'] = train['Sex'].map(transformar_sexo)
 
-variaveis = ['Sex_binario','Age']
+variaveis = ['Sex_binario','Age','Pclass','SibSp','Parch','Fare']
 
 x = train[variaveis]
 y = train['Survived']
@@ -27,6 +28,8 @@ y = train['Survived']
 x = x.fillna(-1)
 #print(x.head())
 #print(y.head())
+
+print(train.head())
 
 x_treino, x_validacao, y_treino, y_validacao = train_test_split(x, y)
 
@@ -37,26 +40,33 @@ print(np.mean(y_validacao == p))
 
 
 resultados = []
-for rep in range(10):
-    print("Rep:",rep)
-    kf = KFold(2, shuffle=True, random_state=rep)
+
+kf = RepeatedKFold(n_splits = 2, n_repeats=10, random_state=10)
     
-    for line_train, line_valid in kf.split(x):
-        print("Treino:", line_train.shape[0])  
-        print("Validacao:", line_valid.shape[0])
+for line_train, line_valid in kf.split(x):
+    print("Treino:", line_train.shape[0])  
+    print("Validacao:", line_valid.shape[0])
         
-        x_treino, x_validacao = x.iloc[line_train], x.iloc[line_valid]
-        y_treino, y_validacao = y.iloc[line_train], y.iloc[line_valid]
+    x_treino, x_validacao = x.iloc[line_train], x.iloc[line_valid]
+    y_treino, y_validacao = y.iloc[line_train], y.iloc[line_valid]
         
-        modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
-        modelo.fit(x_treino,y_treino)
-        p = modelo.predict(x_validacao)
-        acc = np.mean(y_validacao == p)
-        resultados.append(acc)
-        print("Acc:",acc)
-        print()
+    modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
+    modelo.fit(x_treino,y_treino)
+    p = modelo.predict(x_validacao)
+    acc = np.mean(y_validacao == p)
+    resultados.append(acc)
+    print("Acc:",acc)
+    print()
         
 print("Acuracia:",np.mean(resultados))
+
+x_valid_check = train.iloc[line_valid].copy()
+x_valid_check['p'] = p
+print(x_valid_check.head())
+
+erros = x_valid_check[x_valid_check['Survived']!=x_valid_check['p']]
+erros = erros[['PassengerId','Pclass','Name','Sex','Age','SibSp','Parch','Ticket','Fare','Cabin','Embarked','Sex_binario','p','Survived']]
+print(erros.head())
 
 '''
 test['Sex_binario'] = test['Sex'].map(transformar_sexo)
