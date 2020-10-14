@@ -20,7 +20,20 @@ def transformar_sexo(valor):
 
 train['Sex_binario'] = train['Sex'].map(transformar_sexo)
 
-variaveis = ['Sex_binario','Age','Pclass','SibSp','Parch','Fare']
+train['Embarked_S'] = (train['Embarked'] =='S').astype(int)
+train['Embarked_C'] = (train['Embarked'] =='C').astype(int)
+train['Embarked_Q'] = (train['Embarked'] =='Q').astype(int)
+train['Cabine_Nula'] = train['Cabin'].isnull().astype(int)
+
+train['Miss'] = train['Name'].str.contains("Miss").astype(int)
+train['Mrs'] = train['Name'].str.contains("Mrs").astype(int)
+train['Master'] = train['Name'].str.contains("Master").astype(int)
+train['Col'] = train['Name'].str.contains("Col").astype(int)
+train['Major'] = train['Name'].str.contains("Major").astype(int)
+train['Mr'] = train['Name'].str.contains("Mr").astype(int)
+
+variaveis = ['Sex_binario','Age','Pclass','SibSp','Parch','Fare','Embarked_S','Embarked_C','Embarked_Q',
+             'Cabine_Nula','Miss','Mrs','Master','Col','Major','Mr']
 
 x = train[variaveis]
 y = train['Survived']
