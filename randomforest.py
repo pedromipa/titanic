@@ -7,8 +7,6 @@ test =  pd.read_csv('test.csv')
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RepeatedKFold
-
-np.random.seed(0)
             
 modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
 
