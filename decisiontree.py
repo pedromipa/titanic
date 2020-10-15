@@ -19,7 +19,6 @@ def transformar_sexo(valor):
 
 train['Sex_binario'] = train['Sex'].map(transformar_sexo)
 
-
 train['Embarked_S'] = (train['Embarked'] =='S').astype(int)
 train['Embarked_C'] = (train['Embarked'] =='C').astype(int)
 train['Embarked_Q'] = (train['Embarked'] =='Q').astype(int)
@@ -63,7 +62,6 @@ for line_train, line_valid in kf.split(x):
     x_treino, x_validacao = x.iloc[line_train], x.iloc[line_valid]
     y_treino, y_validacao = y.iloc[line_train], y.iloc[line_valid]
         
-    modelo = DecisionTreeClassifier(random_state=0)
     modelo.fit(x_treino,y_treino)
     p = modelo.predict(x_validacao)
     acc = np.mean(y_validacao == p)
