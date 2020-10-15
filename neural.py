@@ -74,14 +74,6 @@ for line_train, line_valid in kf.split(x):
         
 print("Acuracia:",np.mean(resultados))
 
-x_valid_check = train.iloc[line_valid].copy()
-x_valid_check['p'] = p
-print(x_valid_check.head())
-
-erros = x_valid_check[x_valid_check['Survived']!=x_valid_check['p']]
-erros = erros[['PassengerId','Pclass','Name','Sex','Age','SibSp','Parch','Ticket','Fare','Cabin','Embarked','Sex_binario','p','Survived']]
-print(erros.head())
-
 '''
 test['Sex_binario'] = test['Sex'].map(transformar_sexo)
 
