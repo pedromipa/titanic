@@ -46,6 +46,7 @@ print("Acuracia s/ validação cruzada:",np.mean(y_validacao == p))
 
 resultados = []
 
+#Cross Validation
 kf = RepeatedKFold(n_splits = 2, n_repeats=10, random_state=10)
     
 for line_train, line_valid in kf.split(x):
