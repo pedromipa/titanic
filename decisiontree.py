@@ -8,16 +8,9 @@ from sklearn.tree import DecisionTreeClassifier
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RepeatedKFold
+from sklearn.metrics import confusion_matrix
             
 modelo = DecisionTreeClassifier(random_state=0)
-
-def transformar_sexo(valor):
-    if valor == 'female':
-        return 1
-    else: 
-        return 0
-
-train['Sex_binario'] = train['Sex'].map(transformar_sexo)
 
 train['Embarked_S'] = (train['Embarked'] =='S').astype(int)
 train['Embarked_C'] = (train['Embarked'] =='C').astype(int)
@@ -31,10 +24,11 @@ train['Col'] = train['Name'].str.contains("Col").astype(int)
 train['Major'] = train['Name'].str.contains("Major").astype(int)
 train['Mr'] = train['Name'].str.contains("Mr").astype(int)
 
-variaveis = ['Sex_binario','Age','Pclass','SibSp','Parch','Fare','Embarked_S','Embarked_C','Embarked_Q',
+variaveis = ['Sex','Age','Pclass','SibSp','Parch','Fare','Embarked_S','Embarked_C','Embarked_Q',
              'Cabine_Nula','Miss','Mrs','Master','Col','Major','Mr']
 
-x = train[variaveis]
+x = pd.get_dummies(train[variaveis])
+
 y = train['Survived']
 
 x = x.fillna(-1)
@@ -48,8 +42,7 @@ x_treino, x_validacao, y_treino, y_validacao = train_test_split(x, y)
 modelo.fit(x_treino,y_treino)
 p = modelo.predict(x_validacao)
 
-print(np.mean(y_validacao == p))
-
+print("Acuracia s/ validação cruzada:",np.mean(y_validacao == p))
 
 resultados = []
 
@@ -67,8 +60,9 @@ for line_train, line_valid in kf.split(x):
     acc = np.mean(y_validacao == p)
     resultados.append(acc)
     print("Acc:",acc)
+    print(confusion_matrix(y_validacao, modelo.predict(x_validacao)))
     print()
-        
+    
 print("Acuracia:",np.mean(resultados))
 
 '''
