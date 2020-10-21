@@ -5,12 +5,15 @@ train = pd.read_csv('data/train.csv')
 test =  pd.read_csv('data/test.csv')
 
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
 
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RepeatedKFold
 from sklearn.metrics import confusion_matrix
             
-modelo = DecisionTreeClassifier(random_state=0)
+modelo_1 = DecisionTreeClassifier(random_state=0)
+modelo_2 = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
 
 train['Embarked_S'] = (train['Embarked'] =='S').astype(int)
 train['Embarked_C'] = (train['Embarked'] =='C').astype(int)
@@ -65,20 +68,3 @@ for line_train, line_valid in kf.split(x):
     print()
     
 print("Acuracia:",np.mean(resultados))
-
-
-'''
-test['Sex_binario'] = test['Sex'].map(transformar_sexo)
-
-x_previsao = test[variaveis]
-
-x_previsao = x_previsao.fillna(-1)
-
-print(x_previsao.head())
-
-p = modelo.predict(x_previsao)
-
-submission = pd.Series(p, index = test['PassengerId'], name='Survived')
-
-submission.to_csv("Previsao_modelo.csv",header=True)
-'''

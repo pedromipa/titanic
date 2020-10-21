@@ -1,0 +1,7 @@
+import matplotlib.pyplot as plt
+
+a =np.arange(0,20,1)
+plt.scatter(a,resultados)
+plt.show()
+plt.plot(a,resultados)
+plt.show()

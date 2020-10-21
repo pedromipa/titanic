@@ -74,6 +74,7 @@ for line_train, line_valid in kf.split(x):
         
 print("Acuracia:",np.mean(resultados))
 
+
 '''
 test['Sex_binario'] = test['Sex'].map(transformar_sexo)
 
