@@ -1,8 +1,8 @@
 import numpy as np 
 import pandas as pd 
 
-train = pd.read_csv('train.csv')
-test =  pd.read_csv('test.csv')
+train = pd.read_csv('data/train.csv')
+test =  pd.read_csv('data/test.csv')
 
 #from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split

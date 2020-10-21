@@ -1,8 +1,8 @@
 import numpy as np 
 import pandas as pd 
 
-train = pd.read_csv('train.csv')
-test_data = pd.read_csv('test.csv')
+train = pd.read_csv('data/train.csv')
+test_data = pd.read_csv('data/test.csv')
 
 women = train.loc[train.Sex == 'female']["Survived"]
 rate_women = sum(women)/len(women)

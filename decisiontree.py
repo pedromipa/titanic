@@ -1,8 +1,8 @@
 import numpy as np 
 import pandas as pd 
 
-train = pd.read_csv('train.csv')
-test =  pd.read_csv('test.csv')
+train = pd.read_csv('data/train.csv')
+test =  pd.read_csv('data/test.csv')
 
 from sklearn.tree import DecisionTreeClassifier
 
@@ -35,7 +35,7 @@ x = x.fillna(-1)
 #print(x.head())
 #print(y.head())
 
-print(train.head())
+#print(train.head())
 
 x_treino, x_validacao, y_treino, y_validacao = train_test_split(x, y)
 
