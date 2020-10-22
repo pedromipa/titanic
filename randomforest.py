@@ -7,6 +7,8 @@ test =  pd.read_csv('data/test.csv')
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import RepeatedKFold
+from sklearn.metrics import confusion_matrix
+
             
 modelo = RandomForestClassifier(n_estimators=100, n_jobs=-1, random_state=0)
 
@@ -67,7 +69,8 @@ for line_train, line_valid in kf.split(x):
     p = modelo.predict(x_validacao)
     acc = np.mean(y_validacao == p)
     resultados.append(acc)
-    print("Acc:",acc)
+    print("Acc:",acc)    
+    print(confusion_matrix(y_validacao, modelo.predict(x_validacao)))
     print()
         
 print("Acuracia:",np.mean(resultados))
