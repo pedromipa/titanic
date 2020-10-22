@@ -30,8 +30,11 @@ X_test = pd.get_dummies(test_data[features])
 # train.corr().style.format("{:.2}").background_gradient(cmap=plt.get_cmap('coolwarm'),axis=1)
 
 correlation = train.corr()
+print(correlation)
 
-correlation.to_csv('correlacao.csv', index=False)
+correlation.to_csv('correlacao.csv')
+
+
 
 '''
 model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=1)
